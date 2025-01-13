@@ -12,6 +12,11 @@ ZSH_THEME="agnoster"
 plugins=(git golang aliases)
 source $ZSH/oh-my-zsh.sh
 
+# limit prompt length for agnoster
+prompt_dir() {
+  prompt_segment blue $CURRENT_FG '%2~'
+}
+
 # User configuration
 # delete git branch (including remote branches)
 # source: https://www.peterp.me/articles/cli-tips-interactive-branch-delete/
