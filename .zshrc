@@ -1,3 +1,5 @@
+DEFAULT_USER="samuelpetering"
+
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
@@ -11,6 +13,13 @@ plugins=(git golang aliases)
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
+# delete git branch (including remote branches)
+# source: https://www.peterp.me/articles/cli-tips-interactive-branch-delete/
+git_branch_delete_interactive() {
+ local branches branch
+ branches=$(git for-each-ref --count=30 --sort=-committerdate refs/heads/ --format="%(refname:short)") && branch=$(echo "$branches" | fzf --multi ) && git branch -D $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+alias gbdi="git_branch_delete_interactive"
 alias zc="vim ~/.zshrc"
 alias t="cd ~/toolbox/"
 alias ts="date +%s"
@@ -30,6 +39,7 @@ alias cdv="cd ~/.config/nvim"
 alias vc="vim ~/.config/nvim"
 alias vim="nvim"
 alias v.="nvim ."
+alias inv="nvim \$(fzf --preview='bat --color=always {}')"
 
 #ghostty
 alias gc="vim $HOME/.config/ghostty/config"
@@ -47,6 +57,10 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
+
+# fzf
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
