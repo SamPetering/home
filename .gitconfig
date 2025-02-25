@@ -16,7 +16,7 @@
 	algorithm = histogram
 	colorMoved = plain
 	mnemonicPrefix = true
-	renames = tru
+	renames = true
 [push]
 	default = simple
 	autoSetupRemote = true
